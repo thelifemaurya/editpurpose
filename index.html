@@ -2,33 +2,27 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GTA V UI Concept</title>
+    <title>GTA V Selection UI</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="ui-container">
-        <div class="stats-panel" id="statsPanel">
-            <h2 id="charName">CHARACTER</h2>
-            <div class="stat-row"><span>SPECIAL</span><div class="bar"><div class="fill" id="stat-special"></div></div></div>
-            <div class="stat-row"><span>STAMINA</span><div class="bar"><div class="fill" id="stat-stamina"></div></div></div>
-            <div class="stat-row"><span>SHOOTING</span><div class="bar"><div class="fill" id="stat-shooting"></div></div></div>
-            <div class="stat-row"><span>STRENGTH</span><div class="bar"><div class="fill" id="stat-strength"></div></div></div>
-            <div class="stat-row"><span>STEALTH</span><div class="bar"><div class="fill" id="stat-stealth"></div></div></div>
+    <div class="main-wrapper">
+        <div class="stats-container" id="statsBox">
+            <div class="stat-item"><span>SPECIAL</span><div class="bar-bg"><div class="fill" id="s-special"></div></div></div>
+            <div class="stat-item"><span>STAMINA</span><div class="bar-bg"><div class="fill" id="s-stamina"></div></div></div>
+            <div class="stat-item"><span>SHOOTING</span><div class="bar-bg"><div class="fill" id="s-shooting"></div></div></div>
+            <div class="stat-item"><span>STRENGTH</span><div class="bar-bg"><div class="fill" id="s-strength"></div></div></div>
+            <div class="stat-item"><span>STEALTH</span><div class="bar-bg"><div class="fill" id="s-stealth"></div></div></div>
+            <div class="stat-item"><span>FLYING</span><div class="bar-bg"><div class="fill" id="s-flying"></div></div></div>
+            <div class="stat-item"><span>DIVING</span><div class="bar-bg"><div class="fill" id="s-diving"></div></div></div>
+            <div class="stat-item"><span>LUNG CAPACITY</span><div class="bar-bg"><div class="fill" id="s-lung"></div></div></div>
         </div>
 
-        <div class="wheel-outer">
-            <div class="wheel-segment top" data-id="0">
-                <img src="char1.png" alt="Top">
-            </div>
-            <div class="wheel-segment right" data-id="1">
-                <img src="char3.png" alt="Right">
-            </div>
-            <div class="wheel-segment bottom" data-id="3">
-                </div>
-            <div class="wheel-segment left" data-id="2">
-                <img src="char2.png" alt="Left">
-            </div>
+        <div class="selection-wheel">
+            <div class="segment s-top active" data-id="0"><img src="char1.png"></div>
+            <div class="segment s-right" data-id="1"><img src="char3.png"></div>
+            <div class="segment s-bottom" data-id="3"></div> <div class="segment s-left" data-id="2"><img src="char2.png"></div>
+            <div class="center-cross"></div>
         </div>
     </div>
     <script src="script.js"></script>
