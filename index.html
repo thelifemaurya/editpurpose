@@ -2,27 +2,28 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>GTA V Selection UI</title>
+    <title>GTA V UI Reference</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="main-wrapper">
-        <div class="stats-container" id="statsBox">
-            <div class="stat-item"><span>SPECIAL</span><div class="bar-bg"><div class="fill" id="s-special"></div></div></div>
-            <div class="stat-item"><span>STAMINA</span><div class="bar-bg"><div class="fill" id="s-stamina"></div></div></div>
-            <div class="stat-item"><span>SHOOTING</span><div class="bar-bg"><div class="fill" id="s-shooting"></div></div></div>
-            <div class="stat-item"><span>STRENGTH</span><div class="bar-bg"><div class="fill" id="s-strength"></div></div></div>
-            <div class="stat-item"><span>STEALTH</span><div class="bar-bg"><div class="fill" id="s-stealth"></div></div></div>
-            <div class="stat-item"><span>FLYING</span><div class="bar-bg"><div class="fill" id="s-flying"></div></div></div>
-            <div class="stat-item"><span>DIVING</span><div class="bar-bg"><div class="fill" id="s-diving"></div></div></div>
-            <div class="stat-item"><span>LUNG CAPACITY</span><div class="bar-bg"><div class="fill" id="s-lung"></div></div></div>
+    <div class="ui-wrapper">
+        <div class="stats-box" id="statsBox">
+            <div class="stat-group"><span>Special</span><div class="bg"><div class="fill" id="s-special"></div></div></div>
+            <div class="stat-group"><span>Stamina</span><div class="bg"><div class="fill" id="s-stamina"></div></div></div>
+            <div class="stat-group"><span>Shooting</span><div class="bg"><div class="fill" id="s-shooting"></div></div></div>
+            <div class="stat-group"><span>Strength</span><div class="bg"><div class="fill" id="s-strength"></div></div></div>
+            <div class="stat-group"><span>Stealth</span><div class="bg"><div class="fill" id="s-stealth"></div></div></div>
+            <div class="stat-group"><span>Flying</span><div class="bg"><div class="fill" id="s-flying"></div></div></div>
+            <div class="stat-group"><span>Diving</span><div class="bg"><div class="fill" id="s-diving"></div></div></div>
+            <div class="stat-group"><span>Lung capacity</span><div class="bg"><div class="fill" id="s-lung"></div></div></div>
         </div>
 
-        <div class="selection-wheel">
-            <div class="segment s-top active" data-id="0"><img src="char1.png"></div>
-            <div class="segment s-right" data-id="1"><img src="char3.png"></div>
-            <div class="segment s-bottom" data-id="3"></div> <div class="segment s-left" data-id="2"><img src="char2.png"></div>
-            <div class="center-cross"></div>
+        <div class="wheel">
+            <div class="slice top active" data-id="0"><img src="char1.png"></div>
+            <div class="slice right" data-id="1"><img src="char3.png"></div>
+            <div class="slice bottom" data-id="3"></div>
+            <div class="slice left" data-id="2"><img src="char2.png"></div>
+            <div class="border-lines"></div>
         </div>
     </div>
     <script src="script.js"></script>
