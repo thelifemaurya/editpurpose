@@ -1,30 +1,32 @@
-const data = [
-    { color: "#ff5e5e", stats: [65, 50, 80, 40, 90, 30, 60, 20] }, // Red Char
-    { color: "#64ccff", stats: [40, 35, 60, 45, 95, 20, 75, 40] }, // Blue Char
-    { color: "#ffac5e", stats: [75, 80, 50, 70, 40, 60, 30, 80] }  // Orange Char
+const charData = [
+    { color: "#ff5e5e", stats: [80, 70, 90, 50, 40, 60, 30, 80] }, // Top (Red)
+    { color: "#64ccff", stats: [40, 80, 50, 60, 90, 40, 70, 50] }, // Right (Blue)
+    { color: "#ffac5e", stats: [60, 50, 70, 80, 50, 90, 40, 60] }  // Left (Orange)
 ];
 
 const barIds = ['s-special', 's-stamina', 's-shooting', 's-strength', 's-stealth', 's-flying', 's-diving', 's-lung'];
-let idx = 0;
+let currentIndex = 0;
 
-function update() {
+function updateUI() {
     const slices = document.querySelectorAll('.slice');
     slices.forEach(s => s.classList.remove('active'));
-    
-    // Switch character (cycling 0, 1, 2)
-    const activeSlice = document.querySelector(`.slice[data-id="${idx}"]`);
-    activeSlice.classList.add('active');
 
-    const currentData = data[idx];
-    
+    // Handle cycling 0, 1, 2 (skip 3/bottom)
+    const activeSlice = document.querySelector(`.slice[data-id="${currentIndex}"]`);
+    if(activeSlice) activeSlice.classList.add('active');
+
+    const stats = charData[currentIndex].stats;
+    const color = charData[currentIndex].color;
+
     barIds.forEach((id, i) => {
         const bar = document.getElementById(id);
-        bar.style.width = currentData.stats[i] + '%';
-        bar.style.backgroundColor = currentData.color;
+        bar.style.width = stats[i] + '%';
+        bar.style.backgroundColor = color;
     });
 
-    idx = (idx + 1) % 3;
+    currentIndex = (currentIndex + 1) % 3;
 }
 
-setInterval(update, 1500);
-update();
+// Start cycling
+setInterval(updateUI, 2000);
+updateUI();
