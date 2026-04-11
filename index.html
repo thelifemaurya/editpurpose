@@ -2,34 +2,179 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GTA V Master UI</title>
-    <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>GTA Master UI Mobile</title>
+    <style>
+        :root {
+            --bg-color: #00FF00; /* Green screen for editing */
+            --wheel-size: 70vw; /* Responsive size for mobile */
+            --max-wheel: 300px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+        body {
+            background-color: var(--bg-color);
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-end;
+            padding-bottom: env(safe-area-inset-bottom, 20px);
+            font-family: 'Arial Narrow', sans-serif;
+            overflow: hidden;
+            touch-action: none;
+        }
+
+        /* Stats Box - Properly Responsive */
+        .stats-container {
+            background: rgba(10, 10, 10, 0.95);
+            width: 85%;
+            max-width: 250px;
+            padding: 12px;
+            margin-bottom: 20px;
+            border-radius: 2px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+        }
+
+        .stat-item { margin-bottom: 8px; }
+        .stat-label {
+            color: #fff;
+            font-size: 10px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            font-weight: bold;
+            margin-bottom: 3px;
+            display: block;
+        }
+
+        .bar-bg { width: 100%; height: 8px; background: rgba(255,255,255,0.1); }
+        .bar-fill { height: 100%; width: 0%; transition: 0.6s cubic-bezier(0.23, 1, 0.32, 1); }
+
+        /* The Wheel - The AE/Mobile Logic */
+        .wheel-wrapper {
+            position: relative;
+            width: var(--wheel-size);
+            height: var(--wheel-size);
+            max-width: var(--max-wheel);
+            max-height: var(--max-wheel);
+            margin-bottom: 20px;
+        }
+
+        .wheel-main {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: #000;
+            border: 3px solid #fff;
+            overflow: visible; /* Allows pop-out */
+        }
+
+        .slice {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            opacity: 0.4;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            z-index: 1;
+        }
+
+        /* AE-Style Image Fitting */
+        .slice img {
+            position: absolute;
+            width: 140%; /* Slightly larger to prevent gaps during pop-up */
+            height: 140%;
+            top: -20%;
+            left: -20%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        /* Perfect Clipping Quarters */
+        .top { clip-path: polygon(50% 50%, 0 0, 100% 0); background: #8e3535; }
+        .right { clip-path: polygon(50% 50%, 100% 0, 100% 100%); background: #4e8ba7; }
+        .left { clip-path: polygon(50% 50%, 0 0, 0 100%); background: #b9762e; }
+        .bottom { clip-path: polygon(50% 50%, 0 100%, 100% 100%); background: #111; }
+
+        /* Pop-up & Dynamic Glow */
+        .slice.active {
+            opacity: 1;
+            z-index: 10;
+        }
+
+        .top.active { transform: translateY(-15px) scale(1.05); filter: drop-shadow(0 0 15px #ff5e5e); }
+        .right.active { transform: translateX(15px) scale(1.05); filter: drop-shadow(0 0 15px #64ccff); }
+        .left.active { transform: translateX(-15px) scale(1.05); filter: drop-shadow(0 0 15px #ffac5e); }
+
+        /* The Crosshair lines */
+        .lines {
+            position: absolute;
+            top: -3px; left: -3px;
+            width: calc(100% + 6px);
+            height: calc(100% + 6px);
+            border-radius: 50%;
+            border: 3px solid white;
+            background: 
+                linear-gradient(45deg, transparent 49.2%, white 49.2%, white 50.8%, transparent 50.8%),
+                linear-gradient(-45deg, transparent 49.2%, white 49.2%, white 50.8%, transparent 50.8%);
+            pointer-events: none;
+            z-index: 5;
+        }
+    </style>
 </head>
 <body>
-    <div class="main-screen">
-        <div class="stats-panel" id="statsBox">
-            <div class="stat-row"><span>Special</span><div class="bar-bg"><div class="bar-fill" id="s-special"></div></div></div>
-            <div class="stat-row"><span>Stamina</span><div class="bar-bg"><div class="bar-fill" id="s-stamina"></div></div></div>
-            <div class="stat-row"><span>Shooting</span><div class="bar-bg"><div class="bar-fill" id="s-shooting"></div></div></div>
-            <div class="stat-row"><span>Strength</span><div class="bar-bg"><div class="bar-fill" id="s-strength"></div></div></div>
-            <div class="stat-row"><span>Stealth</span><div class="bar-bg"><div class="bar-fill" id="s-stealth"></div></div></div>
-            <div class="stat-row"><span>Flying</span><div class="bar-bg"><div class="bar-fill" id="s-flying"></div></div></div>
-            <div class="stat-row"><span>Diving</span><div class="bar-bg"><div class="bar-fill" id="s-diving"></div></div></div>
-            <div class="stat-row"><span>Lung Capacity</span><div class="bar-bg"><div class="bar-fill" id="s-lung"></div></div></div>
-        </div>
 
-        <div class="wheel-box">
-            <div class="character-wheel">
-                <div class="slice top active" data-id="0"><img src="char1.png" alt="C1"></div>
-                <div class="slice right" data-id="1"><img src="char3.png" alt="C3"></div>
-                <div class="slice left" data-id="2"><img src="char2.png" alt="C2"></div>
-                <div class="slice bottom" data-id="3"></div>
-                
-                <div class="crosshair"></div>
-            </div>
+    <div class="stats-container">
+        <div class="stat-item"><span class="stat-label">Special</span><div class="bar-bg"><div class="bar-fill" id="s-special"></div></div></div>
+        <div class="stat-item"><span class="stat-label">Stamina</span><div class="bar-bg"><div class="bar-fill" id="s-stamina"></div></div></div>
+        <div class="stat-item"><span class="stat-label">Shooting</span><div class="bar-bg"><div class="bar-fill" id="s-shooting"></div></div></div>
+        <div class="stat-item"><span class="stat-label">Strength</span><div class="bar-bg"><div class="bar-fill" id="s-strength"></div></div></div>
+        <div class="stat-item"><span class="stat-label">Stealth</span><div class="bar-bg"><div class="bar-fill" id="s-stealth"></div></div></div>
+        <div class="stat-item"><span class="stat-label">Flying</span><div class="bar-bg"><div class="bar-fill" id="s-flying"></div></div></div>
+        <div class="stat-item"><span class="stat-label">Diving</span><div class="bar-bg"><div class="bar-fill" id="s-diving"></div></div></div>
+        <div class="stat-item"><span class="stat-label">Lung Capacity</span><div class="bar-bg"><div class="bar-fill" id="s-lung"></div></div></div>
+    </div>
+
+    <div class="wheel-wrapper">
+        <div class="wheel-main">
+            <div class="slice top active" data-id="0"><img src="char1.png"></div>
+            <div class="slice right" data-id="1"><img src="char3.png"></div>
+            <div class="slice left" data-id="2"><img src="char2.png"></div>
+            <div class="slice bottom" data-id="3"></div>
+            <div class="lines"></div>
         </div>
     </div>
-    <script src="script.js"></script>
+
+    <script>
+        const config = [
+            { color: "#ff5e5e", stats: [65, 80, 90, 45, 30, 60, 40, 75] },
+            { color: "#64ccff", stats: [40, 60, 50, 75, 95, 20, 80, 30] },
+            { color: "#ffac5e", stats: [85, 45, 70, 60, 50, 90, 30, 85] }
+        ];
+
+        const barIds = ['s-special', 's-stamina', 's-shooting', 's-strength', 's-stealth', 's-flying', 's-diving', 's-lung'];
+        let idx = 0;
+
+        function updateUI() {
+            const slices = document.querySelectorAll('.slice');
+            slices.forEach(s => s.classList.remove('active'));
+            
+            const currentSlice = document.querySelector(`.slice[data-id="${idx}"]`);
+            if(currentSlice) currentSlice.classList.add('active');
+
+            const data = config[idx];
+            barIds.forEach((id, i) => {
+                const bar = document.getElementById(id);
+                bar.style.width = data.stats[i] + '%';
+                bar.style.backgroundColor = data.color;
+            });
+
+            idx = (idx + 1) % 3;
+        }
+
+        setInterval(updateUI, 2000);
+        updateUI();
+    </script>
 </body>
 </html>
