@@ -1,47 +1,37 @@
 const barIds = ['s-special', 's-stamina', 's-shooting', 's-strength', 's-stealth', 's-flying', 's-diving', 's-lung'];
 
-const timeline = [
+const config = [
     { 
-        color: "#7E261F", 
-        stats: [85, 70, 95, 60, 40, 55, 30, 80],
-        start: 0,    // 1:08 starts immediately
-        end: 15000   // 1:23 (15 seconds duration)
+        color: "#7E261F", // Brownish Red
+        stats: [85, 75, 90, 60, 45, 50, 30, 80] 
     },
     { 
-        color: "#59F8F6", 
-        stats: [40, 90, 60, 85, 95, 30, 75, 50],
-        start: 15000, // 1:23 starts
-        end: 64000    // 2:12 (49 seconds duration)
+        color: "#59F8F6", // Cyan/Blue
+        stats: [45, 95, 65, 80, 90, 35, 70, 55] 
     },
     { 
-        color: "#FBAE67", 
-        stats: [95, 50, 80, 70, 60, 95, 45, 90],
-        start: 64000, // 2:12 starts
-        end: 75000    // 2:23 (11 seconds duration)
+        color: "#FBAE67", // Orange
+        stats: [90, 55, 75, 70, 65, 95, 40, 85] 
     }
 ];
 
-let phase = 0;
+let currentIndex = 0;
 
-function runAnimation() {
-    const current = timeline[phase];
+function updateStats() {
+    const data = config[currentIndex];
     
-    // Update bars
     barIds.forEach((id, i) => {
         const bar = document.getElementById(id);
-        bar.style.backgroundColor = current.color;
-        bar.style.width = current.stats[i] + '%';
+        bar.style.backgroundColor = data.color;
+        bar.style.width = data.stats[i] + '%';
     });
 
-    // Calculate duration for next phase
-    const duration = current.end - current.start;
-
-    // Move to next phase after duration
-    setTimeout(() => {
-        phase = (phase + 1) % timeline.length;
-        runAnimation();
-    }, duration);
+    // Cycle index (0 -> 1 -> 2 -> 0...)
+    currentIndex = (currentIndex + 1) % config.length;
 }
 
-// Start the sequence
-runAnimation();
+// Fixed 2-second timer
+setInterval(updateStats, 2000);
+
+// Initial trigger
+updateStats();
