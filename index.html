@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>GTA V UI Reference</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GTA V Character Selection</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -18,17 +19,22 @@
             <div class="stat-group"><span>Lung capacity</span><div class="bg"><div class="fill" id="s-lung"></div></div></div>
         </div>
 
-                <div class="wheel">
-            <div class="slice top active" data-id="0"></div>
-            <div class="slice right" data-id="1"></div>
-            <div class="slice bottom" data-id="3"></div>
-            <div class="slice left" data-id="2"></div>
-            
-            <div class="border-lines"></div>
-            
-            <img src="char1.png" class="wheel-char-img" alt="Character">
+        <div class="wheel-container">
+            <div class="wheel">
+                <div class="slice top active" data-id="0">
+                    <img src="char1.png" class="char-img">
                 </div>
-        
+                <div class="slice right" data-id="1">
+                    <img src="char3.png" class="char-img">
+                </div>
+                <div class="slice left" data-id="2">
+                    <img src="char2.png" class="char-img">
+                </div>
+                <div class="slice bottom" data-id="3"></div>
+                
+                <div class="border-lines"></div>
+            </div>
+        </div>
     </div>
     <script src="script.js"></script>
 </body>
